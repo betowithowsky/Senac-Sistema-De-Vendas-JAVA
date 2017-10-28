@@ -5,12 +5,20 @@
  */
 package br.com.loja.ui.venda;
 
+import br.com.loja.model.produto.Produto;
+import br.com.loja.model.produto.ProdutoVenda;
+import br.com.loja.model.venda.Venda;
+import br.com.loja.service.venda.ServicoVenda;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author yuri
  */
 public class EfetuarVenda extends javax.swing.JFrame {
-
+    private ArrayList<ProdutoVenda> produtos = new ArrayList<ProdutoVenda>();
+    private float total;
     /**
      * Creates new form EfetuarVenda
      */
@@ -29,12 +37,12 @@ public class EfetuarVenda extends javax.swing.JFrame {
 
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        fieldCPF = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        labelTotal = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        botaoAddProduto = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -57,18 +65,23 @@ public class EfetuarVenda extends javax.swing.JFrame {
         jButton1.setText("Finalizar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botaoSalvarVenda(evt);
             }
         });
 
         jButton2.setText("Cancelar");
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel2.setText("Total: R$ 59.80");
+        labelTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        labelTotal.setText("Total: R$ 59.80");
 
         jLabel3.setText("Cesta de Produtos:");
 
-        jButton3.setText("Adicionar");
+        botaoAddProduto.setText("Adicionar");
+        botaoAddProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAddProdutoActionPerformed(evt);
+            }
+        });
 
         jTextField2.setEditable(false);
         jTextField2.setText("Camiseta");
@@ -77,6 +90,7 @@ public class EfetuarVenda extends javax.swing.JFrame {
 
         jLabel5.setText("Valor:");
 
+        jTextField3.setEditable(false);
         jTextField3.setText("R$ 29.90");
 
         jLabel6.setText("Qtd.");
@@ -111,14 +125,14 @@ public class EfetuarVenda extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1)
                             .addComponent(jLabel7)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
                         .addGap(41, 41, 41)
@@ -130,7 +144,7 @@ public class EfetuarVenda extends javax.swing.JFrame {
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(jTextField5)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jButton3))
+                                    .addComponent(botaoAddProduto))
                                 .addGroup(layout.createSequentialGroup()
                                     .addComponent(jLabel4)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -154,8 +168,8 @@ public class EfetuarVenda extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3)
+                    .addComponent(fieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(botaoAddProduto)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(jButton5))
@@ -175,7 +189,7 @@ public class EfetuarVenda extends javax.swing.JFrame {
                         .addComponent(jButton4))
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -186,13 +200,35 @@ public class EfetuarVenda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botaoSalvarVenda(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarVenda
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+        Venda venda = new Venda();
+        venda.setClienteCPF(fieldCPF.getText());
+        venda.setProdutos(produtos);
+        try {
+            ServicoVenda.cadastrarVenda(venda);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_botaoSalvarVenda
 
+    private void atualizarTotal () {
+        float total = 0;
+        for (ProdutoVenda produto : produtos) {
+            total += produto.getTotal();
+        }
+        labelTotal.setText("Total R$: " + total);
+        this.total = total;
+    }
+    
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void botaoAddProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAddProdutoActionPerformed
+        //produtos.add(e)
+    }//GEN-LAST:event_botaoAddProdutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,25 +266,25 @@ public class EfetuarVenda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoAddProduto;
+    private javax.swing.JTextField fieldCPF;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel labelTotal;
     // End of variables declaration//GEN-END:variables
 }

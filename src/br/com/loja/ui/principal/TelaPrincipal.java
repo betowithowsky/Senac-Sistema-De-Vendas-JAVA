@@ -8,6 +8,7 @@ package br.com.loja.ui.principal;
 import br.com.loja.ui.categoria.CadastroCategoria;
 import br.com.loja.ui.cliente.CadastroCliente;
 import br.com.loja.ui.produto.CadastroProduto;
+import br.com.loja.ui.venda.EfetuarVenda;
 import javax.swing.JFrame;
 
 /**
@@ -18,6 +19,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private CadastroCliente telaCliente = null;
     private CadastroProduto telaProduto = null;
     private CadastroCategoria telaCategoria = null;
+    private EfetuarVenda efetuarvenda = null;
     /**
      * Creates new form TelaPrincipal
      */
@@ -41,6 +43,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         searchUser = new javax.swing.JMenuItem();
         product = new javax.swing.JMenu();
         createProduct = new javax.swing.JMenuItem();
+        venda = new javax.swing.JMenu();
+        vendaItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +74,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
         product.add(createProduct);
 
         jMenuBar1.add(product);
+
+        venda.setText("Venda");
+
+        vendaItem.setText("Efetuar Venda");
+        vendaItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vendaItemActionPerformed(evt);
+            }
+        });
+        venda.add(vendaItem);
+
+        jMenuBar1.add(venda);
 
         setJMenuBar(jMenuBar1);
 
@@ -109,6 +125,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         telaProduto.toFront();
     }//GEN-LAST:event_createProductActionPerformed
+
+    private void vendaItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vendaItemActionPerformed
+        if(efetuarvenda == null || !efetuarvenda.isDisplayable()) {
+            efetuarvenda = new EfetuarVenda();
+            efetuarvenda.pack();
+            efetuarvenda.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            efetuarvenda.setLocationRelativeTo(null);
+            efetuarvenda.setVisible(true);
+        }
+        efetuarvenda.toFront();
+    }//GEN-LAST:event_vendaItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,5 +179,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu product;
     private javax.swing.JMenuItem searchUser;
     private javax.swing.JMenu user;
+    private javax.swing.JMenu venda;
+    private javax.swing.JMenuItem vendaItem;
     // End of variables declaration//GEN-END:variables
 }
