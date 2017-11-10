@@ -12,7 +12,7 @@ import br.com.loja.model.produto.Produto;
  * @author yuri
  */
 public class ValidadorProduto {
-    public void validar(Produto produto) throws Exception {
+    public static void validar(Produto produto) throws Exception {
         if(produto.getNome().equals("") || produto.getNome() == null) {
             throw new Exception("Nome obrigatório");
         }

@@ -10,8 +10,9 @@ package br.com.loja.model.produto;
  * @author yuri
  */
 public class Produto {
+    
     private int categoriaId;
-    private int id;
+    private Integer id;
     private String nome;
     private String marca;
     private double preco;
@@ -26,11 +27,11 @@ public class Produto {
         this.categoriaId = categoriaId;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
