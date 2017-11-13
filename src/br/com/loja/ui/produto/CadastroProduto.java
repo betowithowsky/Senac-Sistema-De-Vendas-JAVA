@@ -168,7 +168,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         Produto produto = new Produto();
         produto.setNome(jTextFieldNome.getText());
         produto.setCategoriaId(jComboBoxCategoria.getItemCount());
-        produto.setPreco(Double.parseDouble(jTextFieldValor.getText()));
+        String valor = jTextFieldValor.getText();
+        produto.setPreco(Double.parseDouble(valor.replace("R$", "").replace(",", ".")));
         produto.setQuantidade(Integer.parseInt(jTextFieldQuantidade.getText()));
         produto.setDescricao(jTextAreaDescricao.getText());
 
